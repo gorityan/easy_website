@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Generator - MVP</title>
+  <style>
+    /* ============================================================
+       リセットとベーススタイル
+       ============================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ============================================================
+       メインコンテナ
+       ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================================
+       ヘッダー
+       ============================================================ */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      opacity: 0.95;
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       フォーム部分
+       ============================================================ */
+    .form-container {
+      padding: 40px 30px;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       入力フィールド
+       ============================================================ */
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="text"]::placeholder {
+      color: #999;
+    }
+
+    /* ============================================================
+       セレクトボックス
+       ============================================================ */
+    select {
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23667eea"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+      padding-right: 35px;
+      cursor: pointer;
+    }
+
+    /* ============================================================
+       ラジオボタン
+       ============================================================ */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+
+    .radio-option:hover {
+      border-color: #667eea;
+      background-color: #f0f2ff;
+    }
+
+    .radio-option input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      margin-right: 12px;
+      accent-color: #667eea;
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-label {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .radio-label {
+      cursor: pointer;
+      flex: 1;
+      transition: color 0.3s ease;
+    }
+
+    .radio-description {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       ボタン
+       ============================================================ */
+    .button-container {
+      margin-top: 40px;
+      display: flex;
+      gap: 12px;
+      animation: fadeIn 0.5s ease-out 0.6s both;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    #generateBtn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    #generateBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.4);
+    }
+
+    #generateBtn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    #generateBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #resetBtn {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px solid #e0e0e0;
+    }
+
+    #resetBtn:hover {
+      background-color: #e8e8e8;
+      border-color: #d0d0d0;
+    }
+
+    /* ============================================================
+       ローディング状態
+       ============================================================ */
+    .loading-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-spinner.active {
+      display: inline-block;
+    }
+
+    /* ============================================================
+       メッセージ表示
+       ============================================================ */
+    .message {
+      margin-top: 20px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      display: none;
+      font-size: 0.9rem;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================================
+       レスポンシブ
+       ============================================================ */
+    @media (max-width: 480px) {
+      .container {
+        border-radius: 12px;
+      }
+
+      .header {
+        padding: 30px 20px;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      .button-container {
+        flex-direction: column;
+      }
+    }
+
+    /* ============================================================
+       アクセシビリティ
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌐 Website Generator</h1>
+      <p>あなたのカスタムWebサイトを数秒で生成</p>
+    </div>
+
+    <div class="form-container">
+      <form id="generatorForm">
+        <!-- サイトタイトル -->
+        <div class="form-group">
+          <label for="siteTitle">サイトタイトル</label>
+          <input
+            type="text"
+            id="siteTitle"
+            name="siteTitle"
+            placeholder="例：My Awesome Website"
+            required
+          />
+        </div>
+
+        <!-- テーマカラー -->
+        <div class="form-group">
+          <label for="themeColor">テーマカラー</label>
+          <select id="themeColor" name="themeColor" required>
+            <option value="">-- 選択してください --</option>
+            <option value="red">🔴 レッド</option>
+            <option value="blue">🔵 ブルー</option>
+            <option value="green">🟢 グリーン</option>
+          </select>
+        </div>
+
+        <!-- メイン見出し -->
+        <div class="form-group">
+          <label for="mainHeading">メイン見出し</label>
+          <input
+            type="text"
+            id="mainHeading"
+            name="mainHeading"
+            placeholder="例：Welcome to My Site"
+            required
+          />
+        </div>
+
+        <!-- レイアウト選択 -->
+        <div class="form-group">
+          <label>レイアウト構成</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input
+                type="radio"
+                id="layoutA"
+                name="layout"
+                value="layoutA"
+                required
+              />
+              <label for="layoutA" class="radio-label">
+                レイアウトA
+                <span class="radio-description">画像左・テキスト右</span>
+              </label>
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                id="layoutB"
+                name="layout"
+                value="layoutB"
+              />
+              <label for="layoutB" class="radio-label">
+                レイアウトB
+                <span class="radio-description">テキスト上・画像下</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ボタン -->
+        <div class="button-container">
+          <button type="submit" id="generateBtn">
+            <span class="loading-spinner"></span>
+            サイトを生成してダウンロード
+          </button>
+          <button type="reset" id="resetBtn">リセット</button>
+        </div>
+
+        <!-- メッセージ -->
+        <div id="message" class="message"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // フロントエンドJavaScript
+    // ============================================================
+
+    const form = document.getElementById('generatorForm');
+    const generateBtn = document.getElementById('generateBtn');
+    const messageDiv = document.getElementById('message');
+    const loadingSpinner = document.querySelector('.loading-spinner');
+
+    /**
+     * メッセージを表示する関数
+     */
+    function showMessage(text, type = 'success') {
+      messageDiv.textContent = text;
+      messageDiv.className = `message show ${type}`;
+
+      // 3秒後にメッセージを非表示
+      setTimeout(() => {
+        messageDiv.classList.remove('show');
+      }, 3000);
+    }
+
+    /**
+     * フォーム送信時の処理
+     */
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // ボタンを無効化してローディング状態を表示
+      generateBtn.disabled = true;
+      loadingSpinner.classList.add('active');
+      generateBtn.textContent = '生成中...';
+
+      try {
+        // フォームデータを取得
+        const formData = new FormData(form);
+        const data = {
+          siteTitle: formData.get('siteTitle'),
+          themeColor: formData.get('themeColor'),
+          mainHeading: formData.get('mainHeading'),
+          layout: formData.get('layout')
+        };
+
+        // バリデーション
+        if (!data.siteTitle.trim() || !data.themeColor || !data.mainHeading.trim() || !data.layout) {
+          throw new Error('すべての項目を入力してください');
+        }
+
+        // APIにリクエストを送信
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        // レスポンスがOKでない場合
+        if (!response.ok) {
+          throw new Error(`サーバーエラー: ${response.status}`);
+        }
+
+        // HTMLファイルをダウンロード
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `website-${Date.now()}.html`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        showMessage('✅ サイトの生成とダウンロードが完了しました！', 'success');
+
+      } catch (error) {
+        console.error('Error:', error);
+        showMessage(`❌ エラーが発生しました: ${error.message}`, 'error');
+
+      } finally {
+        // ボタンを有効化
+        generateBtn.disabled = false;
+        loadingSpinner.classList.remove('active');
+        generateBtn.textContent = 'サイトを生成してダウンロード';
+      }
+    });
+
+    /**
+     * リセットボタンの処理
+     */
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      messageDiv.classList.remove('show');
+    });
+
+    /**
+     * 初期化：最初のラジオボタンをチェック
+     */
+    document.getElementById('layoutA').checked = true;
+  </script>
+</body>
+</html>
