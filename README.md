@@ -2,7 +2,7 @@
 
 ユーザーがブラウザ上のフォームから設定値を入力し、カスタマイズされたWebサイト（HTMLファイル）を動的に生成してダウンロードできるシステムです。
 
-## 📋 プロジェクト構成
+## プロジェクト構成
 
 ```
 site-generator/
@@ -13,7 +13,7 @@ site-generator/
 └── README.md             # このファイル
 ```
 
-## 🎯 機能仕様
+## 機能仕様
 
 ### フロントエンド
 - **サイトタイトル**: テキスト入力（必須）
@@ -29,7 +29,7 @@ site-generator/
 - **レスポンス**: HTMLファイルをダウンロード
 - **セキュリティ**: XSS対策としてユーザー入力をHTMLエスケープ処理
 
-## 🔒 セキュリティ機能
+## セキュリティ機能
 
 ### XSS（クロスサイトスクリプティング）対策
 バックエンド（server.js）で実装される`escapeHtml()`関数により、ユーザーが入力したテキストは以下の文字をエスケープされます：
@@ -41,7 +41,7 @@ site-generator/
 
 これにより、HTML特殊文字が含まれたタイトルや見出しでも安全に処理されます。
 
-## 💻 セットアップ手順
+## セットアップ手順
 
 ### 1. 前提条件
 - **Node.js** v14.0.0 以上がインストールされていることを確認
@@ -80,13 +80,13 @@ node server.js
 
 実行例：
 ```
-✅ Website Generator Server is running!
-📍 Access the application at: http://localhost:3000
+ Website Generator Server is running!
+ Access the application at: http://localhost:3000
 
-🚀 Ready to generate dynamic websites...
+Ready to generate dynamic websites...
 ```
 
-## 🌐 使用方法
+## 使用方法
 
 ### ブラウザでのアクセス
 
@@ -107,7 +107,7 @@ node server.js
 
 5. ダウンロードされたHTMLファイルをブラウザで開くと、生成されたWebサイトが表示されます
 
-## 📡 REST API 仕様
+##  REST API 仕様
 
 ### リクエスト例
 
@@ -147,7 +147,7 @@ curl -X POST http://localhost:3000/api/generate \
 }
 ```
 
-## 🎨 生成されるHTMLサイトの特徴
+##  生成されるHTMLサイトの特徴
 
 生成されたWebサイトには以下の機能が含まれます：
 
@@ -172,7 +172,7 @@ curl -X POST http://localhost:3000/api/generate \
 - 下部：グラデーション背景の画像プレースホルダー
 - モバイル表示でも同じスタック構成を維持
 
-## 🧪 動作確認
+##  動作確認
 
 ### 正常動作の確認手順
 
@@ -228,7 +228,7 @@ curl -X POST http://localhost:3000/api/generate \
 | 通信方式 | REST API (JSON) |
 | セキュリティ | HTMLエスケープ処理 |
 
-## 🚀 スケーリングの考慮事項
+##  スケーリングの考慮事項
 
 MVP版として現在の実装は以下に対応しています：
 
@@ -243,7 +243,7 @@ MVP版として現在の実装は以下に対応しています：
 - 画像アップロード機能
 - データベース統合
 
-## 🐛 トラブルシューティング
+##  トラブルシューティング
 
 ### ポート3000が既に使用されている場合
 
@@ -273,11 +273,11 @@ npm install
 - ブラウザでファイルをドラッグ&ドロップして開く
 - または右クリック→「プログラムから開く」でブラウザを選択
 
-## 📝 ライセンス
+##  ライセンス
 
 MIT License
 
-## 👨‍💻 開発者向け情報
+##  開発者向け情報
 
 ### コード構造
 
@@ -329,10 +329,10 @@ if (config.layout === 'layoutC') {
 }
 ```
 
-## 📧 サポート
+##  サポート
 
 質問やバグ報告については、プロジェクトのIssueを作成してください。
 
 ---
 
-**Happy Site Generating! 🎉**
+**Happy Site Generating! **
